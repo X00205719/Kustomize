@@ -5,9 +5,6 @@ resources:
 patches:
 - path: increase-replicas.yaml
 images:
-- name: banking-deployment
-  newName: lostud.azurecr.io/banking
-  newTag: "1.25"
 - name: lostud.azurecr.io/banking
   newName: lostud.azurecr.io/banking
   newTag: "1.26"
