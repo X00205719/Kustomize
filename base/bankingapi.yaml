@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: bankingapi-deployment
+  namespace: default 
   annotations: 
     kubernetes.io/change-cause: "Updating from V1:v2"
 spec:
@@ -41,6 +42,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: bankingapi-service
+  namespace: default
 spec:
   selector:
     app.kubernetes.io/name: bankingapi-app
