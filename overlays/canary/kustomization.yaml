@@ -1,10 +1,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ../../base
+- ../../base/banking
+nameSuffix: "-canary"
 patches:
-- path: increase-replicas.yaml
+- path: patch.yaml
 images:
 - name: lostud.azurecr.io/banking
   newName: lostud.azurecr.io/banking
-  newTag: "1.26"
+  newTag: "1.23"

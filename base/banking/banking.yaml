@@ -1,10 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: banking-deployment
-  namespace: default 
-  annotations: 
-    kubernetes.io/change-cause: "Updating from V1:v2"
+  name: banking-deployment 
+  namespace: default
 spec:
   replicas: 1
   selector:
@@ -12,15 +10,14 @@ spec:
       app: banking-app
   template:
     metadata:
-      name: banking
-      labels: 
+      labels:
         env: prod
         app: banking-app
         app.kubernetes.io/name: banking-app
     spec:
       containers:
         - name: banking-app
-          image: lostud.azurecr.io/banking:1.22
+          image: lostud.azurecr.io/banking:TAG
           ports:
             - containerPort: 80
               name: http-banking
@@ -36,19 +33,3 @@ spec:
               value: http://+:80
             - name: ASPNETCORE_ENVIRONMENT
               value: Production
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: banking-service
-  namespace: default
-spec:
-  selector:
-    app.kubernetes.io/name: banking-app
-  ports:
-    - name: banking-port
-      protocol: TCP
-      port: 80
-      targetPort: 80
-  type: ClusterIP
