@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: bankingapi-app
-          image: lostud.azurecr.io/banking-api:latest
+          image: lostud.azurecr.io/banking-api:TAG
           ports:
             - containerPort: 80
               name: http-bankapi
