@@ -6,9 +6,6 @@ resources:
 patches:
 - path: patch.yaml
 images:
-- name: lostud.azurecr.io/banking
-  newName: lostud.azurecr.io/banking
-  newTag: "1.26"
 - name: lostud.azurecr.io/banking-api
   newName: lostud.azurecr.io/banking-api
   newTag: "1.6"
