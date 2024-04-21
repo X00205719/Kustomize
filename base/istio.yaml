@@ -56,25 +56,3 @@ spec:
   - name: canary
     labels:
       version: canary  # Must match the labels in your deployment for the canary version
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: kiali-virtual-service
-  namespace: aks-istio-ingress 
-spec:
-  hosts:
-  - "*"
-  gateways:
-  - external-gateway
-  http:
-  - match:
-    - uri:
-        exact: /kiali
-    rewrite:
-      uri: "/"
-    route:
-    - destination:
-        host: kiali.istio-system.svc.cluster.local
-        port:
-          number: 20001
