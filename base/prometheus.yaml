@@ -2,30 +2,30 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: prometheus-deployment
-  namespace: default
+  namespace: istio-system  # Moved to istio-system
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: prometheus  # Changed from 'tier' to 'app' for clearer label conventions
+      app: prometheus
   template:
     metadata:
       labels:
-        app: prometheus  # Changed from 'tier' to 'app' for clearer label conventions
+        app: prometheus
     spec:
       containers:
         - name: prometheus
-          image: prom/prometheus:latest  # Specifying a version is recommended
+          image: prom/prometheus:latest
           ports:
             - containerPort: 9090
           volumeMounts:
             - name: prometheus-volume
               mountPath: /data
           resources:
-            requests:  # Requests define the resources a container will initially request
+            requests:
               cpu: "100m"
               memory: "100Mi"
-            limits:  # Limits define the maximum resources a container can use
+            limits:
               cpu: "200m"
               memory: "200Mi"
       volumes:
@@ -37,7 +37,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata: 
     name: prometheus-pvc
-    namespace: default
+    namespace: istio-system  # Moved to istio-system
     labels:
       name: pvcprometheus
 spec:
@@ -46,3 +46,17 @@ spec:
     resources:
       requests:   
        storage: 2Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus
+  namespace: istio-system
+spec:
+  ports:
+  - name: web
+    port: 9090
+    targetPort: 9090
+    protocol: TCP
+  selector:
+    app: prometheus
