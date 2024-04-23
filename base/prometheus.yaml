@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus-deployment
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prometheus  # Changed from 'tier' to 'app' for clearer label conventions
+  template:
+    metadata:
+      labels:
+        app: prometheus  # Changed from 'tier' to 'app' for clearer label conventions
+    spec:
+      containers:
+        - name: prometheus
+          image: prom/prometheus:latest  # Specifying a version is recommended
+          ports:
+            - containerPort: 9090
+          volumeMounts:
+            - name: prometheus-volume
+              mountPath: /data
+          resources:
+            requests:  # Requests define the resources a container will initially request
+              cpu: "100m"
+              memory: "100Mi"
+            limits:  # Limits define the maximum resources a container can use
+              cpu: "200m"
+              memory: "200Mi"
+      volumes:
+        - name: prometheus-volume
+          persistentVolumeClaim:
+            claimName: prometheus-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata: 
+    name: prometheus-pvc
+    namespace: default
+    labels:
+      name: pvcprometheus
+spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:   
+       storage: 2Gi
