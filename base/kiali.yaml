@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kiali
+  namespace: istio-system
+  labels:
+    app: kiali
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kiali
+  template:
+    metadata:
+      labels:
+        app: kiali
+    spec:
+      containers:
+        - name: kiali
+          image: quay.io/kiali/kiali:latest  # Consider using a specific version for production
+          ports:
+            - containerPort: 20001
+          env:
+            - name: AUTH_STRATEGY
+              value: "anonymous"  # For demonstration purposes; use a more secure method in production
+            - name: KIALI_PROMETHEUS_URL
+              value: "http://prometheus.istio-system.svc:9090"
+            - name: ISTIO_NAMESPACE
+              value: "aks-istio-system"
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "200m"
+              memory: "256Mi"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kiali
+  namespace: istio-system
+  labels:
+    app: kiali
+spec:
+  ports:
+    - port: 20001
+      targetPort: 20001
+  selector:
+    app: kiali
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: kiali-virtual-service
+  namespace: aks-istio-ingress
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - external-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /kiali
+    route:
+    - destination:
+        host: kiali.istio-system.svc.cluster.local
+        port:
+          number: 20001
