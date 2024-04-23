@@ -548,23 +548,23 @@
 #         configMap:
 #           name: kiali-cabundle
 #           optional: true
-# ---
-# apiVersion: networking.istio.io/v1alpha3
-# kind: VirtualService
-# metadata:
-#   name: kiali-virtual-service
-#   namespace: aks-istio-ingress
-# spec:
-#   hosts:
-#   - "*"
-#   gateways:
-#   - external-gateway
-#   http:
-#   - match:
-#     - uri:
-#         prefix: /kiali
-#     route:
-#     - destination:
-#         host: kiali.aks-aks-istio-system.svc.cluster.local
-#         port:
-#           number: 20001
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: kiali-virtual-service
+  namespace: aks-istio-ingress
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - external-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /kiali
+    route:
+    - destination:
+        host: kiali.aks-aks-istio-system.svc.cluster.local
+        port:
+          number: 20001

@@ -6,4 +6,4 @@ resources:
 - database.yaml
 - istio.yaml
 - prometheus.yaml
-# - kiali.yaml
+- kiali.yaml
