@@ -66,7 +66,7 @@ spec:
   hosts:
   - "*"
   gateways:
-  - aks-istio-ingress/external-gateway
+  - external-gateway
   http:
   - match:
     - uri:
