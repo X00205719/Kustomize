@@ -5,5 +5,5 @@ resources:
 - bankingapi.yaml
 - database.yaml
 - istio.yaml
-- prometheus.yaml
+# - prometheus.yaml
 - kiali.yaml
