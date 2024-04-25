@@ -36,6 +36,11 @@ spec:
               value: http://+:80
             - name: ASPNETCORE_ENVIRONMENT
               value: Production
+            - name: ConnectionStrings__DefaultValue
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-api
+                  key: connection-string
 
 ---
 apiVersion: v1
