@@ -22,7 +22,10 @@ spec:
             - containerPort: 3306
           env:
             - name: MYSQL_ROOT_PASSWORD
-              value: X9Eu2aSoG54U
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-root-pass
+                  key: password
           resources:
             requests:
               memory: "256Mi"
