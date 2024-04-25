@@ -40,8 +40,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: mysql-api
-                  key: connection-string
-
+                  key: ConnectionStrings_DefaultValue
 ---
 apiVersion: v1
 kind: Service
