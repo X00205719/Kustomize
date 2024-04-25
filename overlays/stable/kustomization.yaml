@@ -11,4 +11,4 @@ images:
   newTag: "1.25"
 - name: lostud.azurecr.io/banking-api
   newName: lostud.azurecr.io/banking-api
-  newTag: "1.8"
+  newTag: "1.9"
