@@ -8,7 +8,7 @@ patches:
 images:
 - name: lostud.azurecr.io/banking
   newName: lostud.azurecr.io/banking
-  newTag: "1.42"
+  newTag: "1.40"
 - name: lostud.azurecr.io/banking-api
   newName: lostud.azurecr.io/banking-api
   newTag: "1.9"
