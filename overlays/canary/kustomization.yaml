@@ -8,4 +8,4 @@ patches:
 images:
 - name: lostud.azurecr.io/banking
   newName: lostud.azurecr.io/banking
-  newTag: "1.55"
+  newTag: "1.35"
