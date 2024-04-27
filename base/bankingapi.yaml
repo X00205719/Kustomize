@@ -41,6 +41,13 @@ spec:
                 secretKeyRef:
                   name: mysql-api
                   key: ConnectionStrings_DefaultValue
+          volumeMounts:
+            - name: document-storage
+              mountPath: /var/data
+      volumes:
+        - name: document-storage
+          persistentVolumeClaim:
+            claimName: documents-pvc
 ---
 apiVersion: v1
 kind: Service
@@ -56,3 +63,15 @@ spec:
       port: 80
       targetPort: 80
   type: ClusterIP
+---  
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: documents-pvc
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
