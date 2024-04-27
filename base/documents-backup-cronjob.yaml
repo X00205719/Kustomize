@@ -26,7 +26,7 @@ spec:
                 ACCOUNT_KEY=$(echo $ACCOUNT_KEY)
 
                 # Define the path where the volume is mounted
-                VOLUME_PATH="/var/data"  # Change this to your mount path
+                VOLUME_PATH="/mnt/data"  # Change this to your mount path
                 DESTINATION_URL="https://backupstorageacctk8slos.blob.core.windows.net/backupdata"
 
                 # Login to Azure Blob Storage using azcopy
@@ -38,8 +38,8 @@ spec:
                 azcopy cp "$VOLUME_PATH" "$DESTINATION_URL" --recursive
                 echo "Backup completed successfully."
             volumeMounts:
-            - name: document-volume
-              mountPath: /var/data
+            - name: documents-volume
+              mountPath: /mnt/data
           restartPolicy: OnFailure
           volumes:
           - name: documents-volume
