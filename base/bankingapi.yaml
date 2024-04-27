@@ -63,15 +63,3 @@ spec:
       port: 80
       targetPort: 80
   type: ClusterIP
----  
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: documents-pvc
-  namespace: default
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 1Gi
