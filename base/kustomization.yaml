@@ -6,4 +6,4 @@ resources:
 - database.yaml
 - istio.yaml
 - kiali.yaml
-- mysql-backup-cronjob.yaml
+- documents-backup-cronjob.yaml
