@@ -26,7 +26,7 @@ spec:
 
                 # Define the path where the volume is mounted
                 VOLUME_PATH="/mnt/data"  # Change this to your mount path
-                DESTINATION_URL="https://backupstorageacctk8slos.blob.core.windows.net//backupdata"
+                DESTINATION_URL="https://backupstorageacctk8slos.blob.core.windows.net/backupdata"
 
                 # Login to Azure Blob Storage using azcopy
                 echo "Logging into Azure Blob Storage..."
