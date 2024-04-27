@@ -1,0 +1,45 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: mysql-backup-cronjob
+spec:
+  schedule: "0 2 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: backup
+            image: mcr.microsoft.com/azure-cli
+            env:
+              - name: ACCOUNT_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: azure-blob-secret
+                    key: accountkey
+            command: ["/bin/bash", "-c"]
+            args:
+              - |
+                # Load Azure Blob Storage credentials from environment variables
+                ACCOUNT_KEY=$(echo $ACCOUNT_KEY)
+
+                # Define the path where the volume is mounted
+                VOLUME_PATH="/mnt/data"  # Change this to your mount path
+                DESTINATION_URL="https://backupstorageacctk8slos.blob.core.windows.net//backupdata"
+
+                # Login to Azure Blob Storage using azcopy
+                echo "Logging into Azure Blob Storage..."
+                azcopy login --account-name $ACCOUNT_NAME --account-key $ACCOUNT_KEY
+
+                # Backup the MySQL volume data
+                echo "Starting backup of MySQL data..."
+                azcopy cp "$VOLUME_PATH" "$DESTINATION_URL" --recursive
+                echo "Backup completed successfully."
+            volumeMounts:
+            - name: mysql-volume
+              mountPath: /mnt/data
+          restartPolicy: OnFailure
+          volumes:
+          - name: mysql-volume
+            persistentVolumeClaim:
+              claimName: mysql-pvc
